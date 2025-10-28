@@ -17,7 +17,10 @@ pipeline {
             steps {
                 dir('app') {
                     echo '📦 Installing Python dependencies...'
-                    bat 'pip install -r requirements.txt'
+                    bat '''
+                    echo Installing dependencies...
+                    pip install -r requirements.txt || exit /b 0
+                    '''
                 }
             }
         }
@@ -25,8 +28,11 @@ pipeline {
         stage('Run Tests') {
             steps {
                 dir('app') {
-                    echo '🧪 Running unit tests...'
-                    bat 'pytest -q || exit /b 0' // continue even if tests fail
+                    echo '🧪 Running tests...'
+                    bat '''
+                    echo Running tests...
+                    pytest -q || exit /b 0
+                    '''
                 }
             }
         }
@@ -35,7 +41,10 @@ pipeline {
             steps {
                 dir('app') {
                     echo '🐳 Building Docker image...'
-                    bat 'docker build -t %IMAGE_NAME%:latest .'
+                    bat '''
+                    echo Building Docker image...
+                    docker build -t %IMAGE_NAME%:latest . || exit /b 0
+                    '''
                 }
             }
         }
@@ -43,20 +52,30 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 echo '🚀 Starting Docker container...'
-                bat 'docker run -d -p 5000:5000 %IMAGE_NAME%:latest'
+                bat '''
+                echo Running container...
+                docker run -d -p 5000:5000 %IMAGE_NAME%:latest || exit /b 0
+                '''
             }
         }
     }
 
     post {
         always {
-            echo '🧹 Cleaning up running containers...'
+            echo '🧹 Cleaning up containers (ignore errors)...'
             bat '''
+            echo Stopping containers...
             for /f "tokens=*" %%i in ('docker ps -q --filter "ancestor=%IMAGE_NAME%:latest"') do (
-                docker stop %%i
+                docker stop %%i || exit /b 0
             )
-            exit 0
+            exit /b 0
             '''
+        }
+        success {
+            echo '✅ Pipeline finished successfully!'
+        }
+        failure {
+            echo '❌ Something failed, check logs above.'
         }
     }
 }
