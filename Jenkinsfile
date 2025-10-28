@@ -9,7 +9,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Cloning GitHub repository...'
-                git credentialsId: 'github-creds', url: 'https://github.com/<your-username>/<your-repo-name>.git', branch: 'main'
+                git branch: 'main',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/anishaA-11/octabyte-assignment.git'
             }
         }
 
@@ -26,7 +28,7 @@ pipeline {
             steps {
                 dir('app') {
                     echo 'Running unit tests...'
-                    sh 'pytest -q || true'  // run pytest but continue even if tests fail
+                    sh 'pytest -q || true'
                 }
             }
         }
