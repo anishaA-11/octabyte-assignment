@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "octabyte-flask-app"
-        DOCKERHUB_USER = "your-dockerhub-username"   // 🔹 Replace this
+        DOCKERHUB_USER = "anishaa1110"   // 🔹 Replace this
         DOCKER_TAG = "latest"
     }
 
@@ -131,7 +131,7 @@ pipeline {
         success {
             echo '✅ Build and deployment successful!'
             emailext(
-                to: 'your_email@example.com',
+                to: 'raresoul2016@gmail.com',
                 subject: "✅ SUCCESS: Jenkins Pipeline - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<p>Good news 🎉</p>
                          <p>Your Jenkins pipeline <b>${env.JOB_NAME}</b> completed successfully.</p>
