@@ -19,7 +19,7 @@ pipeline {
             steps {
                 dir('app') {
                     echo 'Installing Python dependencies...'
-                    sh 'pip install -r requirements.txt'
+                    bat 'pip install -r requirements.txt'
                 }
             }
         }
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 dir('app') {
                     echo 'Running unit tests...'
-                    sh 'pytest -q || true'
+                    bat 'pytest -q || exit 0'
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 dir('app') {
                     echo 'Building Docker image...'
-                    sh 'docker build -t ${IMAGE_NAME}:latest .'
+                    bat 'docker build -t %IMAGE_NAME%:latest .'
                 }
             }
         }
@@ -45,7 +45,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 echo 'Starting Docker container...'
-                sh 'docker run -d -p 5000:5000 ${IMAGE_NAME}:latest'
+                bat 'docker run -d -p 5000:5000 %IMAGE_NAME%:latest'
             }
         }
     }
@@ -53,7 +53,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up running containers...'
-            sh 'docker ps -q --filter "ancestor=${IMAGE_NAME}:latest" | xargs -r docker stop || true'
+            bat 'for /f "tokens=*" %i in (\'docker ps -q --filter "ancestor=%IMAGE_NAME%:latest"\') do docker stop %i'
         }
     }
 }
