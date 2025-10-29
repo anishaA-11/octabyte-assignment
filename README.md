@@ -4,30 +4,11 @@
 
 This repository contains the complete solution for the **Octabyte DevOps assignment**, including Infrastructure Provisioning, CI/CD Automation, Monitoring setup, and Documentation with best practices.
 
----
+**PROJECT STRUCTURE**
 
-## 📁 Project Structure
+<img width="500" height="400" alt="image" src="https://github.com/user-attachments/assets/9746993d-057f-4d33-9beb-92046ffca692" />
 
-octabyte-assignment/
-├── app/                     # Flask application source code
-│   ├── app.py
-│   ├── requirements.txt
-│
-├── infra/                   # Monitoring setup (Prometheus + Grafana)
-│   ├── docker-compose.yml
-│   ├── prometheus.yml
-│
-├── terraform/               # Infrastructure as Code (Azure)
-│   ├── main.tf
-│   ├── variables.tf
-│   ├── outputs.tf
-│   ├── backend.tf
-│   ├── dev.tfvars
-│
-├── Jenkinsfile              # CI/CD pipeline definition
-├── README.md
 
----
 
 ## 🧩 Part 1 — Infrastructure Provisioning (Terraform on Azure)
 
