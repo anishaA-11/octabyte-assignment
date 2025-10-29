@@ -1,0 +1,5 @@
+location        = "East US"
+admin_username  = "anisha"
+ssh_public_key  = "ssh-rsa AAAA...yourkey..."
+db_username     = "octabyteadmin"
+db_password     = "StrongPassword123!"

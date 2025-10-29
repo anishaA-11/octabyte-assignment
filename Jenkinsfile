@@ -131,7 +131,7 @@ pipeline {
         success {
             echo '✅ Build and deployment successful!'
             emailext(
-                to: 'raresoul2016@gmail.com',
+                to: 'your_email@example.com',
                 subject: "✅ SUCCESS: Jenkins Pipeline - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<p>Good news 🎉</p>
                          <p>Your Jenkins pipeline <b>${env.JOB_NAME}</b> completed successfully.</p>

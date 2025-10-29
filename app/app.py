@@ -1,6 +1,10 @@
 from flask import Flask, jsonify
+from prometheus_flask_exporter import PrometheusMetrics  # 👈 import this
 
 app = Flask(__name__)
+
+# 👇 initialize Prometheus metrics
+metrics = PrometheusMetrics(app)
 
 @app.route("/")
 def home():
